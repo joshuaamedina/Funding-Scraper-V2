@@ -1,5 +1,6 @@
 import argparse
-import nih, cprit, scraper
+import nih, cprit, doe, scraper
+import json
 
 def main():
 
@@ -11,18 +12,29 @@ def main():
     parser.add_argument('-o', '--output', dest='output', help='output file', required=True)
     args = parser.parse_args()
 
+    allData = []
 
-    #Cprit = cprit.Cprit(args.start_date,args.end_date)
-    #Cprit.downloadData()
-   # data = Cprit.selectData()
-    #Cprit.deleteData()
+    Doe = doe.Doe(args.start_date, args.end_date)
+    Doe.make_requests()
+    #print(len(Doe.data))
+    allData += Doe.data
+
+
+    Cprit = cprit.Cprit(args.start_date,args.end_date)
+    Cprit.downloadData()
+    Cprit.selectData()
+    Cprit.deleteData()
+    allData += Cprit.data
+    #Cprit.writeUsers('./data/' + args.userlist, './data/' + args.output, Cprit.data)
     
     Nih = nih.Nih(args.start_date,args.end_date)
     #Nih.initializeDate()
     Nih.splitDateRange()
     Nih.findAllProjects()
+    allData += Nih.data
 
-    Nih.writeUsers('./data/' + args.userlist, './data/' + args.output, Nih.data)
+
+    Nih.writeUsers('./data/' + args.userlist, './data/' + args.output, allData)
 
     #print(data)
 

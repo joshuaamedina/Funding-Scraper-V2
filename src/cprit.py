@@ -22,6 +22,8 @@ class Cprit(scraper.Scraper):
 
         s = dt.datetime(int(str(self.end)[0:4]), int(str(self.end)[4:6]), int(str(self.end)[6:]), 0, 0, 1)
         self.end = (float(calendar.timegm(s.timetuple())) * 1000000000)
+        self.data = []
+
 
     def downloadData(self):
         options = webdriver.ChromeOptions()
@@ -87,7 +89,7 @@ class Cprit(scraper.Scraper):
 
             myObj = {
                 "id" : df_filtered['Grant ID'][ind],
-                "agency": df_filtered['Program'][ind],
+                "agency": 'CPRIT: ' + df_filtered['Program'][ind],
                 "awardeeName": df_filtered['Organization'][ind],
                 "piFirstName": piFirstName,
                 "piLastName": piLastName,
