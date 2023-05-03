@@ -1,5 +1,5 @@
 import argparse
-import nih, cprit, doe, scraper
+import nih, cprit, doe, nsf, dod, scraper
 import json
 
 def main():
@@ -14,6 +14,18 @@ def main():
 
     allData = []
 
+    Dod = dod.Dod(args.start_date,args.end_date)
+    Dod.downloadData()
+    Dod.selectData()
+    allData += Dod.data
+
+
+'''
+    Nsf = nsf.Nsf(args.start_date, args.end_date, args.inst)
+    Nsf.search_by_date_range()
+    Nsf.retrieve_award_info()
+    allData += Nsf.data
+
     Doe = doe.Doe(args.start_date, args.end_date)
     Doe.make_requests()
     #print(len(Doe.data))
@@ -23,7 +35,6 @@ def main():
     Cprit = cprit.Cprit(args.start_date,args.end_date)
     Cprit.downloadData()
     Cprit.selectData()
-    Cprit.deleteData()
     allData += Cprit.data
     #Cprit.writeUsers('./data/' + args.userlist, './data/' + args.output, Cprit.data)
     
@@ -37,6 +48,6 @@ def main():
     Nih.writeUsers('./data/' + args.userlist, './data/' + args.output, allData)
 
     #print(data)
-
+'''    
 if __name__ == '__main__':
     main()

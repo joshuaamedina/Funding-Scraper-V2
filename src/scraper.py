@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 import xlsxwriter
 from fuzzywuzzy import fuzz
 import math
+import os
 
 logging.basicConfig(level=logging.DEBUG,
 format='%(asctime)s %(levelname)s %(message)s',
@@ -235,3 +236,12 @@ class Scraper:
     def partition(self,l, n):
         for i in range(0, len(l), n):
             yield l[i:i + n]
+
+    def findData(self):
+        for root, dir, files in os.walk('./'):
+            for filename in files:
+                if ".csv" in filename:
+                    return filename
+    def deleteData(self):
+        filepath = self.findData()
+        os.remove(filepath)

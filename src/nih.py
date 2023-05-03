@@ -138,33 +138,3 @@ class Nih(scraper.Scraper):
 
         print(f'After removing North Texas: {len(all_results)}')
         self.data = all_results
-        
-
-        
-
-'''
-def main():
-
-    parser = argparse.ArgumentParser(description='Scrape NSF funded awards')
-    parser.add_argument('-s', '--start', dest='start_date', help='range start date, format = YYYYMMDD', required=True)
-    parser.add_argument('-e', '--end', dest='end_date', help='range start date, format = YYYYMMDD', required=True)
-    parser.add_argument('-i', '--institution', dest='inst', help='institution search term, format = University+of+Texas', required=True)
-    parser.add_argument('-u', '--userlist', dest='userlist', help='input file with list of names and affiliations', required=True)
-    parser.add_argument('-o', '--output', dest='output', help='output file', required=True)
-    args = parser.parse_args()
-
-    #start = str(args.start_date)[0:4] + "-" + str(args.start_date)[4:6] + "-" + str(args.start_date)[6:]
-    #end = str(args.end_date)[0:4] + "-" + str(args.end_date)[4:6] + "-" + str(args.end_date)[6:]
-
-
-    data = []
-    nih = Nih(data,args.start_date,args.end_date)
-    Nih.initializeDate(nih)
-    Nih.splitDateRange(nih)
-    all_awards = Nih.findAllProjects(nih)
-
-    # split user inputted date range, get all NIH awards, match TACC Users
-
-if __name__ == '__main__':
-    main()
-'''

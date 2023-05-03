@@ -136,10 +136,15 @@ class Doe(scraper.Scraper):
         trs = tbody.find_all("tr")
         tr_heads, tr_bodies = [], []
         while trs:
-            tr_heads.append(trs.pop(0))
-            tr_bodies.append(trs.pop(0))
+            try:
+                tr_heads.append(trs.pop(0))
+                tr_bodies.append(trs.pop(0))
+            except:
+                logging.error(f"Error parsing html. Likely no results were found for specified date range.")
+                return
         logging.info(f"{len(tr_heads)} award entries found on this page")
         results_list = []
+
 
         # Grab data from fields
         for head in tr_heads:

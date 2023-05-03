@@ -46,19 +46,9 @@ class Cprit(scraper.Scraper):
         button.click()
         time.sleep(10)
 
-    def findData(self):
-        for root, dir, files in os.walk('./'):
-            for filename in files:
-                if ".csv" in filename:
-                    return filename
-                
-    def deleteData(self):
-        filepath = self.findData()
-        os.remove(filepath)
-
     def selectData(self):
         all_objects = []
-        filepath = self.findData()
+        filepath = super().findData()
 
         df = pandas.read_csv(filepath)
         df['Grant ID'] = df['Grant ID'].astype(str)
@@ -104,31 +94,4 @@ class Cprit(scraper.Scraper):
             all_objects.append(myObj)
         self.data = all_objects
 
-'''
-def main():
-
-    parser = argparse.ArgumentParser(description='Scrape NSF funded awards')
-    parser.add_argument('-s', '--start', dest='start_date', help='range start date, format = YYYYMMDD', required=True)
-    parser.add_argument('-e', '--end', dest='end_date', help='range start date, format = YYYYMMDD', required=True)
-    parser.add_argument('-i', '--institution', dest='inst', help='institution search term, format = University+of+Texas', required=True)
-    parser.add_argument('-u', '--userlist', dest='userlist', help='input file with list of names and affiliations', required=True)
-    parser.add_argument('-o', '--output', dest='output', help='output file', required=True)
-    args = parser.parse_args()
-
-#    t=dt.datetime(int(str(args.start_date)[0:4]), int(str(args.start_date)[4:6]), int(str(args.start_date)[6:]), 0, 0, 1)
-#    start = (float(calendar.timegm(t.timetuple())) * 1000000000)
-
-#    s=dt.datetime(int(str(args.end_date)[0:4]), int(str(args.end_date)[4:6]), int(str(args.end_date)[6:]), 0, 0, 1)
-#    end = (float(calendar.timegm(s.timetuple())) * 1000000000)
-    
-    #downloadData()
-#    required_data = selectData(start,end)
-    #print(required_data)
-    data = []
-    cprit = Cprit(args.start_date,args.end_date)
-    data += cprit.selectData()
-
-
-if __name__ == '__main__':
-    main()
-'''
+        super().deleteData()
